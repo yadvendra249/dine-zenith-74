@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <NavLink to="/" className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-            SpiceHaven
+            IndianFood
           </NavLink>
 
           {/* Desktop Navigation */}
@@ -25,6 +25,12 @@ const Navbar = () => {
             <NavLink to="/reservations" className="text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
               Reservations
             </NavLink>
+            <NavLink to="/about" className="text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
+              About Us
+            </NavLink>
+            <NavLink to="/careers" className="text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
+              Careers
+            </NavLink>
             <NavLink to="/admin" className="text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
               Admin
             </NavLink>
@@ -32,13 +38,17 @@ const Navbar = () => {
 
           {/* Right Side Icons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="h-5 w-5" />
-            </Button>
+            <NavLink to="/checkout">
+              <Button variant="ghost" size="icon">
+                <ShoppingCart className="h-5 w-5" />
+              </Button>
+            </NavLink>
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
             </Button>
-            <Button className="bg-primary hover:bg-primary/90">Order Now</Button>
+            <NavLink to="/checkout">
+              <Button className="bg-primary hover:bg-primary/90">Order Now</Button>
+            </NavLink>
           </div>
 
           {/* Mobile Menu Button */}
@@ -59,17 +69,27 @@ const Navbar = () => {
             <NavLink to="/reservations" className="block text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
               Reservations
             </NavLink>
+            <NavLink to="/about" className="block text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
+              About Us
+            </NavLink>
+            <NavLink to="/careers" className="block text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
+              Careers
+            </NavLink>
             <NavLink to="/admin" className="block text-foreground hover:text-primary transition-smooth" activeClassName="text-primary font-semibold">
               Admin
             </NavLink>
             <div className="flex space-x-2 pt-4">
-              <Button variant="ghost" size="icon">
-                <ShoppingCart className="h-5 w-5" />
-              </Button>
+              <NavLink to="/checkout">
+                <Button variant="ghost" size="icon">
+                  <ShoppingCart className="h-5 w-5" />
+                </Button>
+              </NavLink>
               <Button variant="ghost" size="icon">
                 <User className="h-5 w-5" />
               </Button>
-              <Button className="bg-primary hover:bg-primary/90 w-full">Order Now</Button>
+              <NavLink to="/checkout" className="flex-1">
+                <Button className="bg-primary hover:bg-primary/90 w-full">Order Now</Button>
+              </NavLink>
             </div>
           </div>
         )}

@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-restaurant.jpg';
 
 const Hero = () => {
@@ -28,13 +29,17 @@ const Hero = () => {
             that will transport your taste buds to the streets of India.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-warm text-lg h-14 px-8">
-              Order Online
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg h-14 px-8">
-              Reserve a Table
-            </Button>
+            <Link to="/checkout">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-warm text-lg h-14 px-8 w-full sm:w-auto">
+                Order Online
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link to="/reservations">
+              <Button size="lg" variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg h-14 px-8 w-full sm:w-auto">
+                Reserve a Table
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
