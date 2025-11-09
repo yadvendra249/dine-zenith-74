@@ -1,12 +1,13 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import aboutImage from '@/assets/about-restaurant.jpg';
 
 const About = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="pt-24 pb-12">
+      <main className="flex-1 pt-24 pb-12">
         <div className="container mx-auto px-4">
           {/* Hero Section */}
           <div className="text-center mb-12">
@@ -89,6 +90,7 @@ const About = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

@@ -6,6 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/slices/cartSlice';
 import { useToast } from '@/hooks/use-toast';
+import { Star } from 'lucide-react';
+import Footer from '@/components/Footer';
 import paneerTikkaImg from '@/assets/paneer-tikka.jpg';
 import chickenTikkaImg from '@/assets/chicken-tikka.jpg';
 import samosaImg from '@/assets/samosa.jpg';
@@ -25,16 +27,16 @@ const categories = [
 ];
 
 const menuItems = [
-  { id: 1, name: 'Paneer Tikka', price: 349, category: 'starters', spicy: 'Medium', veg: true, image: paneerTikkaImg },
-  { id: 2, name: 'Chicken Tikka', price: 399, category: 'starters', spicy: 'Medium', veg: false, image: chickenTikkaImg },
-  { id: 3, name: 'Samosa (2 pcs)', price: 99, category: 'starters', spicy: 'Low', veg: true, image: samosaImg },
-  { id: 4, name: 'Butter Chicken', price: 899, category: 'main', spicy: 'Medium', veg: false, image: butterChickenImg },
-  { id: 5, name: 'Dal Makhani', price: 499, category: 'main', spicy: 'Low', veg: true, image: dalMakhaniImg },
-  { id: 6, name: 'Biryani Special', price: 799, category: 'main', spicy: 'High', veg: false, image: biryaniImg },
-  { id: 7, name: 'Tandoori Roti', price: 49, category: 'breads', spicy: 'None', veg: true, image: breadsImg },
-  { id: 8, name: 'Butter Naan', price: 59, category: 'breads', spicy: 'None', veg: true, image: breadsImg },
-  { id: 9, name: 'Gulab Jamun', price: 199, category: 'desserts', spicy: 'None', veg: true, image: gulabJamunImg },
-  { id: 10, name: 'Rasmalai', price: 249, category: 'desserts', spicy: 'None', veg: true, image: rasmalaiImg },
+  { id: 1, name: 'Paneer Tikka', price: 349, category: 'starters', spicy: 'Medium', veg: true, image: paneerTikkaImg, rating: 4.7 },
+  { id: 2, name: 'Chicken Tikka', price: 399, category: 'starters', spicy: 'Medium', veg: false, image: chickenTikkaImg, rating: 4.8 },
+  { id: 3, name: 'Samosa (2 pcs)', price: 99, category: 'starters', spicy: 'Low', veg: true, image: samosaImg, rating: 4.5 },
+  { id: 4, name: 'Butter Chicken', price: 899, category: 'main', spicy: 'Medium', veg: false, image: butterChickenImg, rating: 4.9 },
+  { id: 5, name: 'Dal Makhani', price: 499, category: 'main', spicy: 'Low', veg: true, image: dalMakhaniImg, rating: 4.6 },
+  { id: 6, name: 'Biryani Special', price: 799, category: 'main', spicy: 'High', veg: false, image: biryaniImg, rating: 4.9 },
+  { id: 7, name: 'Tandoori Roti', price: 49, category: 'breads', spicy: 'None', veg: true, image: breadsImg, rating: 4.4 },
+  { id: 8, name: 'Butter Naan', price: 59, category: 'breads', spicy: 'None', veg: true, image: breadsImg, rating: 4.6 },
+  { id: 9, name: 'Gulab Jamun', price: 199, category: 'desserts', spicy: 'None', veg: true, image: gulabJamunImg, rating: 4.8 },
+  { id: 10, name: 'Rasmalai', price: 249, category: 'desserts', spicy: 'None', veg: true, image: rasmalaiImg, rating: 4.7 },
 ];
 
 const Menu = () => {
@@ -56,9 +58,9 @@ const Menu = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="pt-24 pb-12">
+      <main className="flex-1 pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-4">
@@ -70,56 +72,11 @@ const Menu = () => {
           </div>
 
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8">
-              {categories.map((cat) => (
-                <TabsTrigger key={cat.id} value={cat.id}>
-                  {cat.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            {categories.map((cat) => (
-              <TabsContent key={cat.id} value={cat.id}>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {menuItems
-                    .filter((item) => cat.id === 'all' || item.category === cat.id)
-                    .map((item) => (
-                      <Card key={item.id} className="hover:shadow-warm transition-smooth overflow-hidden">
-                        <div className="aspect-video overflow-hidden">
-                          <img 
-                            src={item.image} 
-                            alt={item.name} 
-                            className="w-full h-full object-cover hover:scale-110 transition-smooth"
-                          />
-                        </div>
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <h3 className="text-xl font-bold mb-2">{item.name}</h3>
-                              <div className="flex gap-2">
-                                <Badge variant={item.veg ? 'default' : 'secondary'}>
-                                  {item.veg ? 'Veg' : 'Non-Veg'}
-                                </Badge>
-                                <Badge variant="outline">{item.spicy} Spicy</Badge>
-                              </div>
-                            </div>
-                            <span className="text-2xl font-bold text-primary">₹{item.price}</span>
-                          </div>
-                          <Button 
-                            className="w-full bg-primary hover:bg-primary/90"
-                            onClick={() => handleAddToCart(item)}
-                          >
-                            Add to Cart
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                </div>
-              </TabsContent>
-            ))}
+...
           </Tabs>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

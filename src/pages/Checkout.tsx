@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store/store';
-import { CreditCard, Smartphone, Wallet } from 'lucide-react';
+import { increaseQuantity, decreaseQuantity, removeFromCart } from '@/store/slices/cartSlice';
+import { CreditCard, Smartphone, Wallet, Plus, Minus, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Checkout = () => {
   const { items, total } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const { toast } = useToast();
 
@@ -25,9 +28,9 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="pt-24 pb-12">
+      <main className="flex-1 pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-4">
@@ -50,35 +53,45 @@ const Checkout = () => {
                     <>
                       <div className="space-y-4 mb-6">
                         {items.map((item) => (
-                          <div key={item.id} className="flex justify-between items-center">
-                            <div className="flex-1">
-                              <p className="font-semibold">{item.name}</p>
-                              <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                          <div key={item.id} className="space-y-2">
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <p className="font-semibold">{item.name}</p>
+                                <p className="text-sm text-muted-foreground">₹{item.price} each</p>
+                              </div>
+                              <p className="font-bold">₹{item.price * item.quantity}</p>
                             </div>
-                            <p className="font-bold">₹{item.price * item.quantity}</p>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => dispatch(decreaseQuantity(item.id))}
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <span className="w-12 text-center font-semibold">{item.quantity}</span>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => dispatch(increaseQuantity(item.id))}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 ml-auto text-destructive"
+                                onClick={() => dispatch(removeFromCart(item.id))}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
                           </div>
                         ))}
                       </div>
-                      <Separator className="my-4" />
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Subtotal</span>
-                          <span>₹{total}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Delivery Fee</span>
-                          <span>₹50</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">GST (5%)</span>
-                          <span>₹{Math.round(total * 0.05)}</span>
-                        </div>
-                        <Separator className="my-2" />
-                        <div className="flex justify-between text-lg font-bold">
-                          <span>Total</span>
-                          <span className="text-primary">₹{Math.round(total * 1.05 + 50)}</span>
-                        </div>
-                      </div>
+...
                     </>
                   )}
                 </CardContent>
@@ -239,6 +252,7 @@ const Checkout = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

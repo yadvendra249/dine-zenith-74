@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/slices/cartSlice';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
+import { Star } from 'lucide-react';
 import menuImage from '@/assets/menu-showcase.jpg';
 import butterChickenImg from '@/assets/butter-chicken.jpg';
 import paneerTikkaImg from '@/assets/paneer-tikka.jpg';
@@ -14,12 +15,12 @@ import breadsImg from '@/assets/breads.jpg';
 import gulabJamunImg from '@/assets/gulab-jamun.jpg';
 
 const menuItems = [
-  { id: 1, name: 'Butter Chicken', price: 899, category: 'Main Course', spicy: 'Medium', veg: false, image: butterChickenImg },
-  { id: 2, name: 'Paneer Tikka Masala', price: 699, category: 'Main Course', spicy: 'Medium', veg: true, image: paneerTikkaImg },
-  { id: 3, name: 'Biryani Special', price: 799, category: 'Rice', spicy: 'High', veg: false, image: biryaniImg },
-  { id: 4, name: 'Dal Makhani', price: 499, category: 'Dal', spicy: 'Low', veg: true, image: dalMakhaniImg },
-  { id: 5, name: 'Tandoori Roti', price: 49, category: 'Bread', spicy: 'None', veg: true, image: breadsImg },
-  { id: 6, name: 'Gulab Jamun', price: 199, category: 'Dessert', spicy: 'None', veg: true, image: gulabJamunImg },
+  { id: 1, name: 'Butter Chicken', price: 899, category: 'Main Course', spicy: 'Medium', veg: false, image: butterChickenImg, rating: 4.8 },
+  { id: 2, name: 'Paneer Tikka Masala', price: 699, category: 'Main Course', spicy: 'Medium', veg: true, image: paneerTikkaImg, rating: 4.7 },
+  { id: 3, name: 'Biryani Special', price: 799, category: 'Rice', spicy: 'High', veg: false, image: biryaniImg, rating: 4.9 },
+  { id: 4, name: 'Dal Makhani', price: 499, category: 'Dal', spicy: 'Low', veg: true, image: dalMakhaniImg, rating: 4.6 },
+  { id: 5, name: 'Tandoori Roti', price: 49, category: 'Bread', spicy: 'None', veg: true, image: breadsImg, rating: 4.5 },
+  { id: 6, name: 'Gulab Jamun', price: 199, category: 'Dessert', spicy: 'None', veg: true, image: gulabJamunImg, rating: 4.8 },
 ];
 
 const FeaturedMenu = () => {
@@ -74,13 +75,17 @@ const FeaturedMenu = () => {
                     <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-smooth">
                       {item.name}
                     </h3>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mb-2">
                       <Badge variant={item.veg ? 'default' : 'secondary'} className="text-xs">
                         {item.veg ? 'Veg' : 'Non-Veg'}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {item.spicy} Spicy
                       </Badge>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 fill-primary text-primary" />
+                      <span className="text-sm font-semibold">{item.rating}</span>
                     </div>
                   </div>
                   <span className="text-2xl font-bold text-primary">₹{item.price}</span>
